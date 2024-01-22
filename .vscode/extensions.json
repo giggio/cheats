@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "timonwong.shellcheck",
+    "foxundermoon.shell-format",
+    "beaglefoot.awk-ide-vscode",
+    "rogalmic.bash-debug",
+    "mads-hartmann.bash-ide-vscode",
+    "editorconfig.editorconfig"
+  ]
+}
