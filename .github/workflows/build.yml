@@ -52,8 +52,17 @@ jobs:
         run: |
           git config --global user.name 'Github Actions'
           git config --global user.email 'giggio@users.noreply.github.com'
+          git clean -fdx
           git checkout built
+          echo "Merging..."
           git merge -X theirs main
+          rm dist -rf
+          ./build.sh --verbose
           git add dist -f
-          git commit -m "Automated build"
-          git push origin built
+          git status
+          if [ -z "`git status --porcelain`" ]; then
+            echo "No changes to commit or push."
+          else
+            git commit -m "Automated build"
+            git push origin built
+          fi
