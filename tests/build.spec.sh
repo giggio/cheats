@@ -19,7 +19,7 @@ b'
 }
 
 @test "With shell, without os" {
-  run find_dist_shell bash $file
+  run find_dist_shell bash "$file"
   assert_success
   assert_output '% y
 c
