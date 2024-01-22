@@ -143,12 +143,12 @@ for file in "$BASEDIR"/cheats/*.cheat; do
   if $VERBOSE; then
     echo "Building compatible cheatsheet for $file"
   fi
-  write_if_not_empty "$BASEDIR/dist/$(basename "$file")" "$(find_dist "$file")"
+  write_if_not_empty "$BASEDIR/dist/common/$(basename "$file")" "$(find_dist "$file")"
   for os in $oss; do
     if $VERBOSE; then
       echo "Building $os cheatsheet for $file"
     fi
-    write_if_not_empty "$BASEDIR/dist/$os/${os}_$(basename "$file")" "$(find_dist_os "$os" "$file")"
+    write_if_not_empty "$BASEDIR/dist/$os/common/${os}_$(basename "$file")" "$(find_dist_os "$os" "$file")"
     for shell in $shells; do
       if $VERBOSE; then
         echo "Building $os/$shell cheatsheet for $file"
