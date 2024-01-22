@@ -1,0 +1,4 @@
+% ps
+
+# Show process details
+ps --long
