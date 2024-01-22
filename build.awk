@@ -1,3 +1,13 @@
+BEGIN {
+  if (os != "" && oss_excluded != "") {
+    print "os and oss_excluded are mutually exclusive"
+    exit 1
+  }
+  if (shell != "" && shells_excluded != "") {
+    print "shell and shells_excluded are mutually exclusive"
+    exit 1
+  }
+}
 /^%/ {
   current_tag = $0;
   getline;

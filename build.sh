@@ -27,7 +27,7 @@ while [[ $# -gt 0 ]]; do
 done
 eval set -- "$PARSED_ARGS"
 if [ -z "$FILES" ]; then
-  FILES=`find "$BASEDIR"/cheats -name '*.cheat' -type f -exec realpath {} \;`
+  FILES=$(find "$BASEDIR"/cheats -name '*.cheat' -type f -exec realpath {} \;)
 fi
 
 if $SHOW_HELP; then
