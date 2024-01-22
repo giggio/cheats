@@ -1,0 +1,9 @@
+% ps, bash
+
+# Show ps tree
+ps -ef --forest
+
+% ps, nushell
+
+# Show process details
+ps --long
