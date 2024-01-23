@@ -1,9 +1,10 @@
 BEGIN {
-  FS = "^% *| *, *";
   # Separator in two parts:
-  # `^% *` -> Considers the % at the beginning followed by 0 or more spaces
-  # ` *, *` -> Considers the comma between 0 or more spaces (greedy)
+  # `^% *` -> Matches the % at the beginning followed by 0 or more spaces
+  # ` *, *` -> Matches the comma between 0 or more spaces (greedy)
+  FS = "^% *| *, *";
 
+  # Parameter condition checking
   if (os != "" && oss_excluded != "") {
     print "os and oss_excluded are mutually exclusive"
     exit 1
@@ -12,52 +13,54 @@ BEGIN {
     print "shell and shells_excluded are mutually exclusive"
     exit 1
   }
+
   # Are we excluding or including?
-  exclude_shell = shells_excluded != ""
-  exclude_os = oss_excluded != ""
+  is_excluding_shell = shells_excluded != ""
+  is_excluding_os = oss_excluded != ""
 
-  shell_pattern = exclude_shell ? shells_excluded : shell
-  os_pattern = exclude_os ? oss_excluded : os
+  # Centralise patterns in a single variable
+  shell_pattern = is_excluding_shell ? shells_excluded : shell
+  os_pattern = is_excluding_os ? oss_excluded : os
 }
-show && !/^%/ { print $0 }
-/^%/{
-  # Start the show flags with the opposite value
-  # if excluding -> show = 1
-  # if including -> show = 0
 
-  show_shell = exclude_shell
-  show_os = exclude_os
-  delete tags
+# Print out content lines of the section is marked to be shown
+show && !/^%/ { print $0 }
+
+# Parse tag line
+/^%/{
+  # Start the validation flags with the opposite value to the current mode
+  # if excluding -> valid = 1
+  # if including -> valid = 0
+  valid_shell = is_excluding_shell
+  valid_os    = is_excluding_os
+
+  # Unprocessed tag line
+  unp_tags = ""
 
   for (i=2; i<=NF; i++) {
-    keep = 1
-    # Match against the patterns and set the show flags
-    # if excluding -> show = 0 if match
-    # if including -> show = 1 if match
+    processed = 0
 
+    # Match the current tag against the patterns
+    # if excluding -> valid = 0 if match
+    # if including -> valid = 1 if match
     if ($i ~ shell_pattern) {
-      show_shell = !exclude_shell
-      keep = 0
+      valid_shell = !is_excluding_shell
+      processed = 1
     }
-    if ($os ~ os_pattern) {
-      show_os = !exclude_os
-      keep = 0
+    if ($i ~ os_pattern) {
+      valid_os = !is_excluding_os
+      processed = 1
     }
 
-    # Keep tag in the tag line if it was not processed
-    if (keep) tags[length(tags)] = $i
-  }
-  # Set show flag
-  show = show_shell && show_os
-
-  # Print the tags we kept if show is true
-  if (show) {
-    tagsf = ""
-    for (i in tags) {
-      if (tagsf != "") tagsf = tagsf ", "
-      tagsf = tagsf tags[i]
+    # Add tag to the unprocessed tags if it was not processed
+    if (!processed) {
+      if (unp_tags != "") unp_tags = unp_tags ", "
+      unp_tags = $i unp_tags
     }
-    tagsf = "% " tagsf
-    print tagsf
   }
+  # Show section if both shell and os is valid
+  show = valid_shell && valid_os
+
+  # Print the unprocessed tags if we are showing the section
+  if (show) print "% " unp_tags
 }

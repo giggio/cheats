@@ -45,13 +45,13 @@ h'
 @test "With shell, without os, twice" {
   run find_dist_shell pwsh "$file"
   assert_success
-  assert_output '% t
-m
-n
-
-% u
+  assert_output '% u
 k
-l'
+l
+
+% t
+m
+n'
 }
 
 @test "Create files" {
@@ -64,7 +64,7 @@ l'
   assert_equal "$(cat "$dist"/nushell/nushell_basic1.cheat)" $'% x\ne\nf'
   assert_equal "$(cat "$dist"/linux/nushell/linux_nushell_basic1.cheat)" $'% w\ng\nh'
   assert_equal "$(cat "$dist"/linux/common/linux_basic1.cheat)" $'% v\ni\nj'
-  assert_equal "$(cat "$dist"/pwsh/pwsh_basic1.cheat)" $'% t\nm\nn\n\n% u\nk\nl'
+  assert_equal "$(cat "$dist"/pwsh/pwsh_basic1.cheat)" $'% u\nk\nl\n\n% t\nm\nn'
   assert [ ! -d "$dist"/windows ]
   assert [ ! -d "$dist"/linux/pwsh ]
   assert [ ! -d "$dist"/linux/bash ]
