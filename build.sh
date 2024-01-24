@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ALL_ARGS=$*
+PARSED_ARGS=`getopt -o fh --long files:,help,verbose -n "$(readlink -f "$0")" -- "$@"`
+eval set -- "$PARSED_ARGS"
 AWK_FILE="$BASEDIR/build.awk"
 
 SHOW_HELP=false
