@@ -56,7 +56,7 @@ n'
 
 @test "Create files" {
   dist=$(mktemp --directory)
-  run create_files "$BATS_TEST_DIRNAME"/basic1.cheat "$dist"
+  run create_files "$dist" "$BATS_TEST_DIRNAME"/basic1.cheat
   assert_success
   assert_output ''
   assert_equal "$(cat "$dist"/common/basic1.cheat)" $'% z\na\nb'

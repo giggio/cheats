@@ -6,14 +6,13 @@ BEGIN {
 
   # Parameter condition checking
   if (os != "" && oss_excluded != "") {
-    print "os and oss_excluded are mutually exclusive"
+    print "os and oss_excluded are mutually exclusive" > "/dev/stderr"
     exit 1
   }
   if (shell != "" && shells_excluded != "") {
-    print "shell and shells_excluded are mutually exclusive"
+    print "shell and shells_excluded are mutually exclusive" > "/dev/stderr"
     exit 1
   }
-
   # Are we excluding or including?
   is_excluding_shell = shells_excluded != ""
   is_excluding_os = oss_excluded != ""
