@@ -44,12 +44,33 @@ jobs:
         with:
           reporter: ${{ github.event_name == 'pull_request' && 'github-pr-review' || 'github-check' }}
           path: "."
-          pattern: "*.sh"
+          pattern: |
+            *.sh
+            *.bash
+          exclude: |
+            ./tests/.testsupport/*
+            ./.git/*
+          check_all_files_with_shebangs: true
+          shellcheck_flags: --shell bash
+          fail_on_error: true
       - run: ./build.sh --verbose
         name: Build
+      - run: |
+          set -euo pipefail
+          echo "Running tests..."
+          npm i -g bats bats-assert bats-support
+          ./run_tests.sh --formatter tap13 | tee ./results.tap
+        name: Test
+      - uses: test-summary/action@v2
+        name: Test Summary
+        with:
+          paths: |
+            ./results.tap
+        if: always()
       - name: Commit build results to built branch
         if: success() && github.event_name != 'pull_request' && startsWith(github.ref, 'refs/heads/main')
         run: |
+          set -euo pipefail
           git config --global user.name 'Github Actions'
           git config --global user.email 'giggio@users.noreply.github.com'
           git clean -fdx
