@@ -1,0 +1,6 @@
+% git
+
+# View a commit from a file history
+git show --format=fuller <commit>
+$ commit: git log --pretty=format:"%C(yellow)%h %Creset%s%Cblue [%cn] %Creset- %ad%Cred%d" --decorate --date=relative <file> --- --map "awk '{ print $1 }'" --multi --preview "git show $(echo {1} | awk '{ print $1 }') --format=fuller"
+$ file: (git ls-files && git ls-files | xargs dirname | awk '{ print $1 "/" }' | sort | uniq) | sort -t . -k 1,1
