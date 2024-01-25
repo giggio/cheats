@@ -1,4 +1,4 @@
-% git
+% git, linux
 
 # View a commit from a file history
 git show --format=fuller <commit>
