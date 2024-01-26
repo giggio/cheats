@@ -1,0 +1,4 @@
+% github
+
+# View github rate limit
+curl -fsSL https://api.github.com/rate_limit | jq
