@@ -1,28 +1,29 @@
 % systemd, linux
 
+; variables:
+$ service: systemctl list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
+$ target: systemctl list-unit-files --type=target --no-pager --no-legend | cut -d " " -f 1
+$ unit: systemctl list-unit-files --type=<unit_type> --no-pager --no-legend | cut -d " " -f 1
+$ unit_type: systemctl -t help --- --header-lines 1
+
 # Stop service
-sudo systemctl stop <service>
-$ service: systemctl list-units --type=service --no-pager --no-legend --state=running --plain | cut -d " " -f 1
+sudo systemctl stop <running_service>
+$ running_service: systemctl list-units --type=service --no-pager --no-legend --state=running --plain | cut -d " " -f 1
 
 # Start service
 sudo systemctl start <service>
-$ service: systemctl list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 
 # Restart service
 sudo systemctl restart <service>
-$ service: systemctl list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 
 # Show service status
 systemctl status <service>
-$ service: systemctl list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 
 # Show service details
 systemctl show <service>
-$ service: systemctl list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 
 # Show service logs
 journalctl -u <service>
-$ service: systemctl list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 
 # Reload daemon
 sudo systemctl daemon-reload
@@ -54,31 +55,48 @@ ls -lah /run/dbus/system_bus_socket
 # Clear journalctl logs
 sudo journalctl --rotate; sudo journalctl --vacuum-time=1s
 
+# Default target
+systemctl get-default
+
+# List unit dependencies
+systemctl list-dependencies <unit>
+
+# List unit dependents
+systemctl list-dependencies --reverse <unit>
+
+
+
+
+
+
+
+
+
 % systemd user, linux
 
+; variables
+$ service: systemctl --user list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
+$ target: systemctl --user list-unit-files --type=target --no-pager --no-legend | cut -d " " -f 1
+$ unit: systemctl --user list-unit-files --type=<unit_type> --no-pager --no-legend | cut -d " " -f 1
+
 # Stop user service
-systemctl --user stop <service>
-$ service: systemctl --user list-units --type=service --no-pager --no-legend --state=running --plain | cut -d " " -f 1
+systemctl --user stop <running_service>
+$ running_service: systemctl --user list-units --type=service --no-pager --no-legend --state=running --plain | cut -d " " -f 1
 
 # Start user service
 systemctl --user start <service>
-$ service: systemctl --user list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 
 # Restart user service
 systemctl --user restart <service>
-$ service: systemctl --user list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 
 # Show user service status
 systemctl --user status <service>
-$ service: systemctl --user list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 
 # Show user service details
 systemctl --user show <service>
-$ service: systemctl --user list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 
 # Show user service logs
 journalctl --user -u <service>
-$ service: systemctl --user list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 
 # Reload user daemon
 systemctl --user daemon-reload
@@ -103,3 +121,9 @@ systemctl --user list-unit-files --type=service
 
 # Show user timers
 systemctl --user list-unit-files --type=timer
+
+# List user unit dependencies
+systemctl --user list-dependencies <unit>
+
+# List user unit dependents
+systemctl --user list-dependencies --reverse <unit>
