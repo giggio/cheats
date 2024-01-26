@@ -1,0 +1,4 @@
+% navi, cheats
+
+# Use raw cheats for development
+export NAVI_PATH=$HOME/.dotfiles/cheats/cheats/
