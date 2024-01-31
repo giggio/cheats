@@ -1,7 +1,36 @@
 % navi, cheats
 
-# Use raw cheats for development
-export NAVI_PATH=$HOME/.dotfiles/cheats/cheats/
-
 # View Navi cheat sheets syntax
-open https://github.com/denisidoro/navi/blob/master/docs/cheatsheet_syntax.md
+start https://github.com/denisidoro/navi/blob/master/docs/cheatsheet_syntax.md
+
+; ------
+
+% navi, cheats, linux, bash
+
+# Use raw cheats for development
+if ! [ -v NAVI_ORIGINAL_PATH ]; then
+  export NAVI_ORIGINAL_PATH=$NAVI_PATH
+  export NAVI_PATH=$HOME/.dotfiles/cheats/cheats/
+fi
+
+# Revert to use built cheats
+if [ -v NAVI_ORIGINAL_PATH ]; then
+  export NAVI_PATH=$NAVI_ORIGINAL_PATH
+  unset NAVI_ORIGINAL_PATH
+fi
+
+; ------
+
+% navi, cheats, nushell
+
+# Use raw cheats for development
+if ($env | get NAVI_ORIGINAL_PATH -i | is-empty) {
+  $env.NAVI_ORIGINAL_PATH = $env.NAVI_PATH
+  $env.NAVI_PATH = ($env.NAVI_PATH | split row (char esep) | first | path expand | split row 'cheats' | first | path join cheats cheats)
+}
+
+# Revert to use built cheats
+if not ($env | get NAVI_ORIGINAL_PATH -i | is-empty) {
+  $env.NAVI_PATH = $env.NAVI_ORIGINAL_PATH
+  hide-env NAVI_ORIGINAL_PATH
+}
