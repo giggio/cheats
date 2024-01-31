@@ -1,0 +1,4 @@
+% file
+
+# Find large files
+sudo find / -path /mnt -prune -o -type f -size +30M -printf "%k\t%p\n" | sort -nrk 1 | tee ~/largefiles.txt
