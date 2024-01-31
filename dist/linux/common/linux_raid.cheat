@@ -1,6 +1,6 @@
 % mdadm, raid
 
-$ mdadm_dev: ls /dev/md*
+$ mdadm_dev: ls /dev/md* -1
 $ drives: ls /dev/sd* -1
 
 # View hard drives (HDDs) and solid state drives (SSDs) ids/serial number
