@@ -1,0 +1,22 @@
+% users, groups, linux
+
+$ user: cat /etc/passwd | cut -d: -f1 | sort
+
+# Add user to group
+sudo usermod -aG <user> <group>
+$ group: cat /etc/group | cut -d: -f1 | sort
+
+# Add user (easy, guided way)
+sudo adduser <new_user> --shell `which bash`
+
+# Add a user (harder way, not guided)
+sudo useradd <new_user>
+
+# List users
+cat /etc/passwd | cut -d: -f1 | sort
+
+# List groups
+cat /etc/group | cut -d: -f1 | sort
+
+# Remove user
+sudo userdel --remove <user>

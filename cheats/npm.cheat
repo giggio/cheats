@@ -1,0 +1,4 @@
+% npm
+
+# Update all npm tools
+npm update -g

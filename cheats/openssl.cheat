@@ -1,0 +1,9 @@
+% openssl, linux
+
+$ file: ls -1
+
+# Encrypt a file
+openssl aes-256-cbc -a -salt -in <file> -out <new_name>.enc
+
+# Decrypt a file
+openssl aes-256-cbc -d -a -in <file>
