@@ -1,4 +1,4 @@
-% git, linux
+% git, bash
 
 # View a commit from a file history
 git show --format=fuller <commit>
@@ -9,3 +9,10 @@ $ file: (git ls-files && git ls-files | xargs dirname | awk '{ print $1 "/" }' |
 git --no-pager --git-dir=<original_dir>/.git format-patch -k -1 --no-color --stdout <commit_sha_for_dir> | git am -3 -k --ignore-whitespace
 $ commit_sha_for_dir: git --git-dir=<original_dir>/.git log --pretty=format:"%C(yellow)%h %Creset%s%Cblue [%cn] %Creset- %ad%Cred%d" --decorate --date=relative --- --map "awk '{ print $1 }'"
 $ original_dir: find `pwd`/.. -maxdepth 2 -type d | xargs realpath | grep -v '.git$'
+
+# Copy all commits from a repository
+for ID in `git --no-pager --git-dir=<original_dir>/.git rev-list <branch> | tac`; do
+  git --no-pager --git-dir=<original_dir>/.git format-patch -k -1 --no-color --stdout $ID | git am -3 -k --ignore-whitespace
+done
+$ original_dir: find `pwd`/.. -maxdepth 2 -type d | xargs realpath | grep -v '.git$'
+$ branch: git --no-pager --git-dir=<original_dir>/.git branch --format='%(refname:short)' | sort
