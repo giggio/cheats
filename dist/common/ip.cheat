@@ -1,0 +1,10 @@
+% ip
+
+# Get outgoing ip 1
+curl ifconfig.co
+
+# Get outgoing ip 2
+curl ifconfig.me
+
+# Get outgoing ip with details
+curl -fsSL ipinfo.io | jq
