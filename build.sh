@@ -3,7 +3,7 @@ set -TCEeuo pipefail
 
 VERBOSE=false
 function info() {
-  echo "$@" >&2
+  echo -e "$@" >&2
 }
 function debug() {
   if $VERBOSE; then
@@ -15,49 +15,9 @@ function error() {
   exit 1
 }
 
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ALL_ARGS=$*
-PARSED_ARGS=`getopt -o fh --long files:,help,verbose -n "$(readlink -f "$0")" -- "$@"`
-eval set -- "$PARSED_ARGS"
-AWK_FILE="$BASEDIR/build.awk"
-
-ALL_ARGS="$*"
-SHOW_HELP=false
-FILES=()
-
-while (($# > 0)); do
-  case "$1" in
-  --help | -h)
-    SHOW_HELP=true
-    break
-    ;;
-  --verbose)
-    VERBOSE=true
-    shift
-    ;;
-  --file | -f)
-    if (($# < 2)); then
-      error "Flag $1 requires an argument, none was given."
-    fi
-    FILES+=("$2")
-    shift 2
-    ;;
-  *)
-    info "Unknown flag $1!"
-    info "For multiple files, use --file multiple times."
-    error "Example: ./$(basename "$0") --file file1.cheat --file file2.cheat"
-    ;;
-  esac
-done
-
-if [ -z "${FILES[*]}" ]; then
-  readarray -t FILES < <(
-    find "${BASEDIR}/cheats" -name '*.cheat' -type f -exec realpath {} \; | sort -u
-  )
-fi
-
-if $SHOW_HELP; then
-  cat <<EOF
+function show_help() {
+  info "$(
+    cat <<EOF
 Builds the cheat sheets into directories using tags.
 
 Usage:
@@ -65,10 +25,48 @@ Usage:
 
 Flags:
       --verbose            Show verbose output
-  -f, --file <FILE>        File to build (can be repeated)
+  -f, --file <FILE>        File to build (repeat to include multiple files)
   -h, --help               help
 EOF
+  )"
   exit 0
+}
+
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ALL_ARGS="${*}"
+AWK_FILE="$BASEDIR/build.awk"
+
+if ! OPTS=$(getopt -o hvf: -l help,verbose,file: -n 'parse-options' -- "$@"); then
+  error "Failed to parse options."
+fi
+eval set -- "$OPTS"
+
+FILES=()
+while [ "$1" != "--" ]; do
+  case "$1" in
+  -h | --help)
+    show_help
+    ;;
+  -v | --verbose)
+    VERBOSE=true
+    shift
+    ;;
+  -f | --file)
+    FILES+=("$2")
+    shift 2
+    ;;
+  esac
+done
+
+if [ "$#" -gt 1 ]; then
+  shift
+  error "Unexpected positional argument: $*\nFor multiple files see --help"
+fi
+
+if [ -z "${FILES[*]}" ]; then
+  readarray -t FILES < <(
+    find "${BASEDIR}/cheats" -name '*.cheat' -type f -exec realpath {} \; | sort -u
+  )
 fi
 
 debug "Running $(basename "$0") ${ALL_ARGS}"
@@ -121,7 +119,7 @@ write_if_not_empty() {
 create_files() {
   local dist=$1
   shift
-  
+
   for file in "$@"; do
     [[ ! -f "$file" ]] && error "Cheat file $file does not exist!"
   done

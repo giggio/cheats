@@ -7,7 +7,7 @@ setup_file() {
 setup() {
   load '_test-helpers.sh'
   # shellcheck source=/dev/null
-  source "$BATS_TEST_DIRNAME"/../build.sh #--curl "$curl_mock"
+  source "$BATS_TEST_DIRNAME"/../build.sh
 }
 
 @test "Without shell and os" {
@@ -55,18 +55,19 @@ n'
 }
 
 @test "Create files" {
+  local dist
   dist=$(mktemp --directory)
   run create_files "$dist" "$BATS_TEST_DIRNAME"/basic1.cheat
   assert_success
   assert_output ''
-  assert_equal "$(cat "$dist"/common/basic1.cheat)" $'% z\na\nb'
-  assert_equal "$(cat "$dist"/bash/bash_basic1.cheat)" $'% y\nc\nd'
-  assert_equal "$(cat "$dist"/nushell/nushell_basic1.cheat)" $'% x\ne\nf'
-  assert_equal "$(cat "$dist"/linux/nushell/linux_nushell_basic1.cheat)" $'% w\ng\nh'
-  assert_equal "$(cat "$dist"/linux/common/linux_basic1.cheat)" $'% v\ni\nj'
-  assert_equal "$(cat "$dist"/pwsh/pwsh_basic1.cheat)" $'% u\nk\nl\n\n% t\nm\nn'
-  assert [ ! -d "$dist"/windows ]
-  assert [ ! -d "$dist"/linux/pwsh ]
-  assert [ ! -d "$dist"/linux/bash ]
-  rm -rf "$dist"
+  assert_equal "$(cat "${dist}/common/basic1.cheat")" $'% z\na\nb'
+  assert_equal "$(cat "${dist}/bash/bash_basic1.cheat")" $'% y\nc\nd'
+  assert_equal "$(cat "${dist}/nushell/nushell_basic1.cheat")" $'% x\ne\nf'
+  assert_equal "$(cat "${dist}/linux/nushell/linux_nushell_basic1.cheat")" $'% w\ng\nh'
+  assert_equal "$(cat "${dist}/linux/common/linux_basic1.cheat")" $'% v\ni\nj'
+  assert_equal "$(cat "${dist}/pwsh/pwsh_basic1.cheat")" $'% u\nk\nl\n\n% t\nm\nn'
+  assert [ ! -d "${dist}/windows" ]
+  assert [ ! -d "${dist}/linux/pwsh" ]
+  assert [ ! -d "${dist}/linux/bash" ]
+  rm -rf "${dist}"
 }
