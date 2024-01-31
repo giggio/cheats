@@ -2,3 +2,6 @@
 
 # Use raw cheats for development
 export NAVI_PATH=$HOME/.dotfiles/cheats/cheats/
+
+# View Navi cheat sheets syntax
+open https://github.com/denisidoro/navi/blob/master/docs/cheatsheet_syntax.md

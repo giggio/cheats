@@ -1,0 +1,22 @@
+% mdadm, raid, linux
+
+$ mdadm_dev: ls /dev/md*
+$ drives: ls /dev/sd* -1
+
+# View hard drives (HDDs) and solid state drives (SSDs) ids/serial number
+udevadm info --query=all --name=/dev/sda | grep ID_SERIAL
+
+# View mdadm value details
+mdadm --detail <mdadm_dev>
+
+# List disks
+ls /dev/sd*
+
+# Add device
+mdadm --manage <mdadm_dev> --add <drives>
+
+# Readd device
+mdadm <mdadm_dev> --re-add <drives>
+
+# View mdadm statistics
+cat /proc/mdstat

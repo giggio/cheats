@@ -1,0 +1,7 @@
+% kubectl, k8s, kubernetes
+
+# Sum all pod's resources
+kubectl top pod --all-namespaces | awk '{print $3}' | tail -n +2 | sed 's/m//' | awk '{n += $1}; END{print n}'
+
+# List all validaing hooks
+kubectl get ValidatingWebhookConfiguration --all-namespaces

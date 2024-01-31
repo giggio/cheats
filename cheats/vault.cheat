@@ -1,0 +1,15 @@
+% Vault
+
+# Init server via docker without -dev but still good for dev
+docker run -d --cap-add=IPC_LOCK --name=vault -p 8200:8200 -e 'VAULT_LOCAL_CONFIG={"backend": {"file": {"path": "/vault/file"}}, "default_lease_ttl": "168h", "max_lease_ttl": "720h", "listener": [{ "tcp": { "address": "0.0.0.0:8200", "tls_disable": 1 } }] }' -v "`pwd`"/vault/:/vault/' vault server -log-level=info
+
+# Vault init (dev)
+vault operator init && vault operator unseal && vault login && vault secrets list && vault secrets enable kv
+
+# Enable vault secrets
+vault secrets enable database
+
+# Configure database for postgres (dev)
+vault write database/config/postgresql plugin_name=postgresql-database-plugin allowed_roles="*" 'connection_url=postgresql://{{username}}:{{password}}@<pg_host>:5432/postgres?sslmode=disable' username="postgres" password="<password>"
+$ pg_host: cat
+$ password: cat
