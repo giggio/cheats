@@ -1,0 +1,15 @@
+% navi, cheats
+
+# Use raw cheats for development
+if ! [ -v NAVI_ORIGINAL_PATH ]; then
+  export NAVI_ORIGINAL_PATH=$NAVI_PATH
+  export NAVI_PATH=$HOME/.dotfiles/cheats/cheats/
+fi
+
+# Revert to use built cheats
+if [ -v NAVI_ORIGINAL_PATH ]; then
+  export NAVI_PATH=$NAVI_ORIGINAL_PATH
+  unset NAVI_ORIGINAL_PATH
+fi
+
+; ------
