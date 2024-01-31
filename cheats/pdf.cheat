@@ -1,0 +1,5 @@
+% pdf, ghostscript
+
+# Join pdfs in one file
+gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dAutoRotatePages=/None -sOutputFile=<out_file_name> <files>
+$ files: find . -maxdepth 2 -type f -name '*.pdf' | sort --- --multi --expand
