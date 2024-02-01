@@ -22,11 +22,25 @@ BEGIN {
   os_pattern = is_excluding_os ? oss_excluded : os
 }
 
+
 # Print out content lines of the section is marked to be shown
-show && !/^%/ { print $0 }
+show && !/^%/ {
+  if ($0 ~ /^\s*$/){
+    # Accumulate trailing empty lines
+    trailing_empty_lines++
+  }
+  else {
+    # Preserve trailing empty lines if we are not at the end of the section
+    while (trailing_empty_lines > 0 && trailing_empty_lines--) print ""
+    print $0
+  }
+}
 
 # Parse tag line
 /^%/{
+  # Remove trailing empty lines
+  trailing_empty_lines = 0
+
   # Start the validation flags with the opposite value to the current mode
   # if excluding -> valid = 1
   # if including -> valid = 0
@@ -61,5 +75,11 @@ show && !/^%/ { print $0 }
   show = valid_shell && valid_os
 
   # Print the unprocessed tags if we are showing the section
-  if (show) print "% " unp_tags
+  if (show){
+    # Add a newline if this is not the first tag
+    if (section_padding) print ""
+    section_padding = 1
+
+    print "% " unp_tags
+  } 
 }
