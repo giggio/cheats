@@ -54,7 +54,7 @@ show && !/^%/ { print $0 }
     # Add tag to the unprocessed tags if it was not processed
     if (!processed) {
       if (unp_tags != "") unp_tags = unp_tags ", "
-      unp_tags = $i unp_tags
+      unp_tags = unp_tags $i
     }
   }
   # Show section if both shell and os is valid
