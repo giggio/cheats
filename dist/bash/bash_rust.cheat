@@ -1,0 +1,4 @@
+% cargo, rust
+
+# Update crates.io index
+rm -rf $TMP/cargoupdate; cargo init $TMP/cargoupdate; cd $TMP/cargoupdate; cargo add utf8parse; cargo update --dry-run; cd -
