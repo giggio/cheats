@@ -36,3 +36,6 @@ docker system df
 
 # Clear build cache
 docker builder prune
+
+# Build with buildkit with full logs
+docker build --progress=plain -t temp .
