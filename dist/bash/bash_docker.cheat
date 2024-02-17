@@ -1,0 +1,5 @@
+% docker
+
+# View merged config yaml, choose yaml
+docker compose -f <config_file> config
+$ config_file: ls -1 *.yml *.yaml

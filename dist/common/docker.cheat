@@ -39,3 +39,6 @@ docker builder prune
 
 # Build with buildkit with full logs
 docker build --progress=plain -t temp .
+
+# View merged config yaml
+docker compose config
