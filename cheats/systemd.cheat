@@ -5,10 +5,28 @@ $ service: systemctl list-unit-files --type=service --no-pager --no-legend | cut
 $ target: systemctl list-unit-files --type=target --no-pager --no-legend | cut -d " " -f 1
 $ unit: systemctl list-unit-files --type=<unit_type> --no-pager --no-legend | cut -d " " -f 1
 $ unit_type: systemctl -t help --- --header-lines 1
+$ running_socket: systemctl list-units --type=socket --no-pager --no-legend --state=active --plain | cut -d " " -f 1
+$ inactive_socket: systemctl list-units --type=socket --no-pager --no-legend --state=inactive --plain | cut -d " " -f 1
+$ socket: systemctl list-units --type=socket --no-pager --no-legend --plain --all | cut -d " " -f 1
 
 # Stop service
 sudo systemctl stop <running_service>
 $ running_service: systemctl list-units --type=service --no-pager --no-legend --state=running --plain | cut -d " " -f 1
+
+# Disable socket
+sudo systemctl disable <running_socket>
+
+# Enable socket
+sudo systemctl enable --user <socket>
+
+# Show socket status
+sudo systemctl status <socket>
+
+# Stop socket
+sudo systemctl stop <running_socket>
+
+# Start socket
+sudo systemctl stop <inactive_socket>
 
 # Start service
 sudo systemctl start <service>
@@ -78,6 +96,24 @@ systemctl list-dependencies --reverse <unit>
 $ service: systemctl --user list-unit-files --type=service --no-pager --no-legend | cut -d " " -f 1
 $ target: systemctl --user list-unit-files --type=target --no-pager --no-legend | cut -d " " -f 1
 $ unit: systemctl --user list-unit-files --type=<unit_type> --no-pager --no-legend | cut -d " " -f 1
+$ running_socket: systemctl --user list-units --type=socket --no-pager --no-legend --state=active --plain | cut -d " " -f 1
+$ inactive_socket: systemctl --user list-units --type=socket --no-pager --no-legend --state=inactive --plain | cut -d " " -f 1
+$ socket: systemctl --user list-units --type=socket --no-pager --no-legend --plain --all | cut -d " " -f 1
+
+# Disable user socket
+systemctl disable --user <running_socket>
+
+# Enable user socket
+systemctl enable --user <socket>
+
+# Show user socket status
+systemctl --user status <socket>
+
+# Stop user socket
+systemctl stop --user <running_socket>
+
+# start user socket
+systemctl start --user <inactive_socket>
 
 # Stop user service
 systemctl --user stop <running_service>
