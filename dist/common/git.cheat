@@ -1,0 +1,4 @@
+% git
+
+# Sync submodules
+git submodule sync
