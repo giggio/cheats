@@ -3,6 +3,10 @@
 # Show ps tree
 ps -ef --forest
 
+# Show process environment variables
+xargs -0 -L1 -a /proc/<pid>/environ
+$ pid: ps -ef --forest --- --column 2
+
 % ps, nushell
 
 # Show process details
