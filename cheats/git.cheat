@@ -1,3 +1,9 @@
+% git
+
+# Sync submodules
+git submodule sync
+
+
 % git, bash
 
 # View a commit from a file history
