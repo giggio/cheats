@@ -1,0 +1,23 @@
+% wsl
+
+; variables
+$ running_instance: wsl -l --running -q | tr -d "\0" | sort | uniq
+$ instance: wsl -l -q | tr -d "\0" | sort | uniq
+
+# List running instances
+wsl -l --running
+
+# Stop instance
+wsl --terminate <running_instance>
+
+# Delete instance (WARNING!)
+wsl --unregister <instance>
+
+
+# Export instance
+wsl --export <instance> <instance>.tar
+
+;# Import instance
+; something like: wsl --import Ubuntu2 .\Ubuntu2\ .\ubuntu-22.04.tar --version 2
+;wsl --import <file> .\<file>\ <file> --version 2
+;$ file: Get-ChildItem *.tar
