@@ -1,0 +1,4 @@
+% bash
+
+# View set options
+printf %s\\n "$-"
