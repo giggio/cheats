@@ -1,0 +1,22 @@
+% nix, bash, linux
+
+$ wsl: grep '[Mm]icrosoft' /proc/version -q && echo 'true' || echo 'false'
+
+# Update Nix packages
+nix-channel --update; BASIC_SETUP=false WSL=<wsl> home-manager switch --show-trace
+
+# Update Nix packages (basic setup)
+nix-channel --update; BASIC_SETUP=true WSL=<wsl> home-manager switch --show-trace
+
+# Show applications (.desktop)
+ls -la ~/.nix-profile/share/applications/
+
+# Show home-manager generations
+home-manager generations
+
+# Installed packages
+nix-env --query --installed --out-path
+
+# Remove generations
+home-manager remove-generations <generation_id>
+$ generation_id: home-manager generations --- --map "awk '{ print $5 }'"
