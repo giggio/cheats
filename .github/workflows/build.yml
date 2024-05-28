@@ -55,6 +55,9 @@ jobs:
           fail_on_error: true
       - run: ./build.sh --verbose
         name: Build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - run: |
           set -euo pipefail
           echo "Running tests..."

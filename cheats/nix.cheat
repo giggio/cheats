@@ -1,12 +1,13 @@
 % nix, bash, linux
 
 $ wsl: grep '[Mm]icrosoft' /proc/version -q && echo 'true' || echo 'false'
+$ nixfile: ls -1 *.nix
 
 # Update Nix packages
-nix-channel --update; BASIC_SETUP=false WSL=<wsl> home-manager switch --show-trace
+nix-channel --update; BASIC_SETUP=false WSL=<wsl> home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager
 
 # Update Nix packages (basic setup)
-nix-channel --update; BASIC_SETUP=true WSL=<wsl> home-manager switch --show-trace
+nix-channel --update; BASIC_SETUP=true WSL=<wsl> home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager
 
 # Show applications (.desktop)
 ls -la ~/.nix-profile/share/applications/
@@ -20,3 +21,12 @@ nix-env --query --installed --out-path
 # Remove generations
 home-manager remove-generations <generation_id>
 $ generation_id: home-manager generations --- --map "awk '{ print $5 }'"
+
+# Run nix file
+nix-instantiate --eval --strict --json <nixfile> | jq
+
+# Run nix file with args
+nix-instantiate --eval --strict --json --arg lib 1 <nixfile> | jq
+
+# Expire old generations
+home-manager expire-generations '-14 days'

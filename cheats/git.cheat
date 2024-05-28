@@ -7,8 +7,8 @@ git submodule sync
 % git, bash
 
 # View a commit from a file history
-git show --format=fuller <commit>
-$ commit: git log --pretty=format:"%C(yellow)%h %Creset%s%Cblue [%cn] %Creset- %ad%Cred%d" --decorate --date=relative <file> --- --map "awk '{ print $1 }'" --preview "git show $(echo {1} | awk '{ print $1 }') --format=fuller"
+git show --format=fuller <file_commit>
+$ file_commit: git log --pretty=format:"%C(yellow)%h %Creset%s%Cblue [%cn] %Creset- %ad%Cred%d" --decorate --date=relative <file> --- --map "awk '{ print $1 }'" --preview "git show $(echo {1} | awk '{ print $1 }') --format=fuller"
 $ file: (git ls-files && git ls-files | xargs dirname | awk '{ print $1 "/" }' | sort | uniq) | sort -t . -k 1,1
 
 # Copy a commit from another repository
@@ -22,3 +22,7 @@ for ID in `git --no-pager --git-dir=<original_dir>/.git rev-list <branch> | tac`
 done
 $ original_dir: find `pwd`/.. -maxdepth 2 -type d | xargs realpath | grep -v '.git$'
 $ branch: git --no-pager --git-dir=<original_dir>/.git branch --format='%(refname:short)' | sort
+
+# Show a commit
+git show --format=fuller <commit>
+$ commit: git log --pretty=format:"%C(yellow)%h %Creset%s%Cblue [%cn] %Creset- %ad%Cred%d" --decorate --date=relative --- --map "awk '{ print $1 }'" --preview "git show $(echo {1} | awk '{ print $1 }') --format=fuller"
