@@ -1,0 +1,4 @@
+% apt, linux
+
+# Show installed packages
+apt list --installed
