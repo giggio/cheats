@@ -1,0 +1,4 @@
+% xdg
+
+# Query default application for file
+xdg-mime query default `xdg-mime query filetype <file>`

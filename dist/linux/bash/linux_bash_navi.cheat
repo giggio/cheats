@@ -12,4 +12,7 @@ if [ -v NAVI_ORIGINAL_PATH ]; then
   unset NAVI_ORIGINAL_PATH
 fi
 
+# Build navi cheats
+$HOME/.dotfiles/cheats/build.sh
+
 ; ------

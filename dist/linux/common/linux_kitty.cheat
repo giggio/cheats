@@ -1,0 +1,4 @@
+% kitty
+
+# Copy term info to remote terminal server
+kitty +kitten ssh <server>

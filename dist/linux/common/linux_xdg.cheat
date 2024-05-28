@@ -1,0 +1,13 @@
+% xdg
+
+$ file: ls -1
+
+# Query file type
+xdg-mime query filetype <file>
+
+# Query default application
+xdg-mime query default <mime>
+
+# View application file (.desktop)
+cat <application_file>
+$ application_file: find ~/.local/share/applications /usr/share/applications/ ~/.nix-profile/share/applications/ -path '*.desktop' --- --preview "cat {1}"

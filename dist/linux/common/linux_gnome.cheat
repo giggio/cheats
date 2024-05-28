@@ -1,0 +1,4 @@
+% gnome
+
+# Exit session
+gnome-session-quit
