@@ -3,11 +3,14 @@
 $ wsl: grep '[Mm]icrosoft' /proc/version -q && echo 'true' || echo 'false'
 $ nixfile: ls -1 *.nix
 
-# Update Nix packages
-nix-channel --update; BASIC_SETUP=false WSL=<wsl> home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager
+# Update Nix, home manager switch
+rm ~/.dotfiles/config/home-manager/flake.lock && BASIC_SETUP=false WSL=<wsl> home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager --refresh
 
-# Update Nix packages (basic setup)
-nix-channel --update; BASIC_SETUP=true WSL=<wsl> home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager
+# Update Nix, home manager switch (basic setup)
+rm ~/.dotfiles/config/home-manager/flake.lock &&  BASIC_SETUP=true WSL=<wsl> home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager --refresh
+
+# Update nix channels
+nix-channel --update
 
 # Show applications (.desktop)
 ls -la ~/.nix-profile/share/applications/
@@ -28,5 +31,40 @@ nix-instantiate --eval --strict --json <nixfile> | jq
 # Run nix file with args
 nix-instantiate --eval --strict --json --arg lib 1 <nixfile> | jq
 
-# Expire old generations
+# Delete home-manager generations older than 2 weeks
 home-manager expire-generations '-14 days'
+
+# Delete home-manager all old generations
+home-manager expire-generations '-0 seconds'
+
+# Remove garbage (gc)
+nix-store --gc
+
+# see https://nixos.wiki/wiki/Cleaning_the_nix_store
+# Show nix gc roots
+sudo `which nix-store` --gc --print-roots | egrep -v "^(/nix/var|/run/\w+-system|\{memory|/proc)"
+
+# Optimize nix store
+nix-store --optimise
+
+# List generations from nix-env
+nix-env --list-generations
+
+# Delete old generations from nix-env
+nix-env --delete-generations old
+
+# List nix-channels
+nix-channel --list
+
+# List nix-channel generations
+nix-channel --list-generations
+
+# Delete old channel generations
+nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations old
+
+# Clean up all Nix storage
+nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations old && \
+  nix-env --delete-generations old && \
+  home-manager expire-generations '-0 seconds' && \
+  nix-store --gc && \
+  nix-store --optimise
