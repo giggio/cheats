@@ -1,13 +1,12 @@
 % nix, bash, linux
 
-$ wsl: grep '[Mm]icrosoft' /proc/version -q && echo 'true' || echo 'false'
 $ nixfile: ls -1 *.nix
 
-# Update Nix, home manager switch
-rm ~/.dotfiles/config/home-manager/flake.lock && BASIC_SETUP=false WSL=<wsl> home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager --refresh
+# Update Nix and home manager switch
+home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager --impure
 
-# Update Nix, home manager switch (basic setup)
-rm ~/.dotfiles/config/home-manager/flake.lock &&  BASIC_SETUP=true WSL=<wsl> home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager --refresh
+# Update Nix, flake inputs and home manager switch
+rm ~/.dotfiles/config/home-manager/flake.lock && home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager --impure --refresh
 
 # Update nix channels
 nix-channel --update
