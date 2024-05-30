@@ -15,4 +15,7 @@ fi
 # Build navi cheats
 $HOME/.dotfiles/cheats/build.sh
 
+# echo 123 (test)
+echo 123
+
 ; ------
