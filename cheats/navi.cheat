@@ -22,6 +22,9 @@ fi
 # Build navi cheats
 $HOME/.dotfiles/cheats/build.sh
 
+# echo 123 (test)
+echo 123
+
 ; ------
 
 % navi, cheats, nushell
@@ -37,3 +40,6 @@ if not ($env | get NAVI_ORIGINAL_PATH -i | is-empty) {
   $env.NAVI_PATH = $env.NAVI_ORIGINAL_PATH
   hide-env NAVI_ORIGINAL_PATH
 }
+
+# echo 456 (test)
+echo 456
