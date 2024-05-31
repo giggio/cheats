@@ -19,7 +19,7 @@ fc-list : file family spacing outline scalable | grep -e spacing=100 -e spacing=
 fc-list :charset=276f
 
 # Show some special font characters
-echo -e "\U0000e0a0\U1F4DD\U0001f937\U0001f936"
+echo -e "\U276F\U0000e0a0\U1F4DD\U0001f937\U0001f936"
 
 # Show the character code for an specific character
 echo -n 📝 | iconv -f utf8 -t utf32be | xxd -p | sed -r 's/^0+/0x/' | xargs printf 'U+%04X\n'
