@@ -1,0 +1,25 @@
+% fonts, linux
+
+# Clear font cache
+fc-cache -r
+
+# List fonts
+fc-list | less
+
+# List fonts with additional properties
+fc-list : family spacing outline scalable | less
+
+# List fonts with additional properties and files
+fc-list : file family spacing outline scalable | less
+
+# List scalable fonts
+fc-list : file family spacing outline scalable | grep -e spacing=100 -e spacing=90 | grep -e outline=True | grep -e scalable=True | less
+
+# List fonts for an specific character
+fc-list :charset=276f
+
+# Show some special font characters
+echo -e "\U0000e0a0\U1F4DD\U0001f937\U0001f936"
+
+# Show the character code for an specific character
+echo -n 📝 | iconv -f utf8 -t utf32be | xxd -p | sed -r 's/^0+/0x/' | xargs printf 'U+%04X\n'
