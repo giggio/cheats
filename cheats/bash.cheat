@@ -2,3 +2,6 @@
 
 # View set options
 printf %s\\n "$-"
+
+# View current completions
+complete -p | less
