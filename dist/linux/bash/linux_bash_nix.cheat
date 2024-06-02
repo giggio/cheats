@@ -30,6 +30,15 @@ nix-instantiate --eval --strict --json <nixfile> | jq
 # Run nix file with args
 nix-instantiate --eval --strict --json --arg lib 1 <nixfile> | jq
 
+# Start a nix-shell with a nix file (remove the space)
+nix-shell -E '{ pkgs ? import <nixpkgs > {} }: pkgs.mkShell { nativeBuildInputs = [ (import ./<nixfile> { inherit pkgs; }) ]; }'
+
+# Build a nix file
+nix-build <nixfile>
+
+# Build a nix file showing an attribute from the build
+nix-build -A attribute <nixfile>
+
 # Delete home-manager generations older than 2 weeks
 home-manager expire-generations '-14 days'
 
