@@ -76,3 +76,8 @@ nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations old 
   home-manager expire-generations '-0 seconds' && \
   nix-store --gc && \
   nix-store --optimise
+
+# List build logs for a particular package
+nix log <store_dir>
+$ store_dir: fd '.*-<executable>-.*' /nix/store/ -td
+$ executable: compgen -c | sort | uniq
