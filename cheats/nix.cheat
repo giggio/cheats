@@ -1,6 +1,7 @@
 % nix, bash, linux
 
 $ nixfile: ls -1 *.nix
+$ executable: compgen -c | sort | uniq
 
 # Update Nix and home manager switch
 home-manager switch --show-trace --flake ~/.dotfiles/config/home-manager --impure
@@ -78,6 +79,9 @@ nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations old 
   nix-store --optimise
 
 # List build logs for a particular package
-nix log <store_dir>
-$ store_dir: fd '.*-<executable>-.*' /nix/store/ -td
-$ executable: compgen -c | sort | uniq
+nix log <store_build_dir>
+$ store_build_dir: fd '.*-<executable>-.*' /nix/store/ -td
+
+# List executable nix store path
+ll <store_dir>
+$ store_dir: dirname $(readlink -f `which <executable>`)
