@@ -4,10 +4,10 @@ $ nixfile: ls -1 *.nix
 $ executable: compgen -c | sort | uniq
 
 # Update Nix and home manager switch
-home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1 --impure
+home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1
 
 # Update Nix, flake inputs and home manager switch
-rm ~/.dotfiles/home-manager/flake.lock && home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1 --impure --refresh
+rm ~/.dotfiles/home-manager/flake.lock && home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1 --refresh
 
 # Update nix channels
 nix-channel --update
