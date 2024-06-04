@@ -1,9 +1,9 @@
-{ pkgs ? import <nixpkgs> { }, ... }:
+{ stdenv, util-linux }:
 
-pkgs.stdenv.mkDerivation {
+stdenv.mkDerivation {
   name = "giggio-cheats";
   src = ./.;
-  nativeBuildInputs = [ pkgs.util-linux ];
+  nativeBuildInputs = [ util-linux ];
   buildPhase = "bash ./build.sh";
   installPhase = ''
     mkdir -p "$out/share/navi/cheats/"
