@@ -1,0 +1,10 @@
+% snap
+
+$ snap: snap list --color=never | awk '{ print $1 }' | tail -n+2
+
+# Update channel for installed snap
+snap refresh <snap> --<channel>
+$ channel: echo -e 'stable\ncandidate\nbeta\nedge'
+
+# View information about a snap
+snap info <snap>
