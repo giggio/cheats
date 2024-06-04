@@ -10,7 +10,7 @@ start https://github.com/denisidoro/navi/blob/master/docs/cheatsheet_syntax.md
 # Use raw cheats for development
 if ! [ -v NAVI_ORIGINAL_PATH ]; then
   export NAVI_ORIGINAL_PATH=$NAVI_PATH
-  export NAVI_PATH=$HOME/.dotfiles/cheats/cheats/
+  export NAVI_PATH=$HOME/.dotfiles/home-manager/cheats/cheats/
 fi
 
 # Revert to use built cheats
@@ -20,7 +20,7 @@ if [ -v NAVI_ORIGINAL_PATH ]; then
 fi
 
 # Build navi cheats
-$HOME/.dotfiles/cheats/build.sh
+$HOME/.dotfiles/home-manager/cheats/build.sh
 
 # echo 123 (test)
 echo 123
