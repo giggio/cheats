@@ -8,3 +8,13 @@ complete -p | less
 
 # List all executables
 compgen -A function -abck | uniq
+
+# Create patch from 2 changed files
+diff -u <original_file> <updated_file>
+$ original_file: ls -1
+$ updated_file: ls -1
+
+# Use a patch
+patch --ignore-whitespace --verbose -u <file_to_patch> -i <patch_file>
+$ file_to_patch: ls -1
+$ patch_file: ls -1 *.patch
