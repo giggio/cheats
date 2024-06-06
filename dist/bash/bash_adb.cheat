@@ -1,0 +1,11 @@
+% android
+
+# List Android devices
+adb devices
+
+# Install apk on Android bypassing low target sdk
+adb install --bypass-low-target-sdk-block <apk>
+$ apk: ls -1 *.apk
+
+# Attach to Android device
+adb attach
