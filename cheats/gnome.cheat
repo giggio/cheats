@@ -5,3 +5,6 @@ gnome-session-quit
 
 # List extension directories
 ll ~/.local/share/gnome-shell/extensions/ /usr/share/gnome-shell/extensions/ ~/.nix-profile/share/gnome-shell/extensions/
+
+# Run a nested gnome shell
+dbus-run-session -- gnome-shell --nested --wayland
