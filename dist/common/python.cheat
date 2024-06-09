@@ -1,0 +1,4 @@
+% python
+
+# List pythong paths
+python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])'; python3 -c 'import site; print(site.getsitepackages())'; python3 -m site --user-site; python3 -m site
