@@ -2,18 +2,16 @@
 
 $ nixfile: ls -1 *.nix
 $ executable: compgen -c | sort | uniq
+$ profile: hm --get-profile
 
 # Update Nix and home manager switch
-home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1
+home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1#<profile>
 
 # Update Nix, flake inputs and home manager switch
-rm ~/.dotfiles/home-manager/flake.lock && home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1 --refresh
+rm ~/.dotfiles/home-manager/flake.lock && home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1#<profile> --refresh
 
 # Update nix channels
 nix-channel --update
-
-# Show applications (.desktop)
-ls -la ~/.nix-profile/share/applications/
 
 # Show home-manager generations
 home-manager generations
@@ -59,6 +57,9 @@ nix-store --optimise
 # List generations from nix-env
 nix-env --list-generations
 
+# List generations from nix-env (NixOS)
+sudo nix-env --profile /nix/var/nix/profiles/system --list-generations
+
 # Delete old generations from nix-env
 nix-env --delete-generations old
 
@@ -77,6 +78,12 @@ nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations old 
   home-manager expire-generations '-0 seconds' && \
   nix-store --gc && \
   nix-store --optimise
+
+# Clean up all Nix storage (NixOS)
+sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations old
+
+# Clean up Nix storage and keep last 3 (NixOS)
+sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +3
 
 # List build logs for a particular package
 nix log <store_build_dir>
