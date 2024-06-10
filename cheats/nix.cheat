@@ -13,9 +13,6 @@ rm ~/.dotfiles/home-manager/flake.lock && home-manager switch --show-trace --fla
 # Update nix channels
 nix-channel --update
 
-# Show applications (.desktop)
-ls -la ~/.nix-profile/share/applications/
-
 # Show home-manager generations
 home-manager generations
 

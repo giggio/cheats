@@ -8,9 +8,12 @@ xdg-mime query filetype <file>
 # Query default application
 xdg-mime query default <mime>
 
+# Show applications (.desktop)
+echo "$XDG_DATA_HOME:$XDG_DATA_DIRS" | tr ':' '\n' | sort -u | xargs -I {} sh -c '[ -d "{}/applications" ] && echo "{}/applications" | sed -s "s/\/\//\//" || true' | xargs -I {} sh -c 'echo -e "\n{}" && ls "{}"'
+
 # View application file (.desktop)
 cat <application_file>
-$ application_file: find ~/.local/share/applications /usr/share/applications/ ~/.nix-profile/share/applications/ -path '*.desktop' --- --preview "cat {1}"
+$ application_file: echo "$XDG_DATA_HOME:$XDG_DATA_DIRS" | tr ':' '\n' | sort -u | xargs -I {} sh -c '[ -d "{}/applications" ] && echo -e "{}/applications" || true' | sed -s 's/\/\//\//' | tr '\n' ' ' | xargs -I {} sh -c "find {} -path '*.desktop'" --- --preview "cat {1}"
 
 % xdg, bash
 
