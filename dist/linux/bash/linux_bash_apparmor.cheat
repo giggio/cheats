@@ -1,0 +1,30 @@
+% apparmor
+
+$ profile: find /etc/apparmor.d/ -maxdepth 1 -type f | sort
+
+# Apparmor status
+sudo apparmor_status
+
+# Apparmor profiles
+find /etc/apparmor.d/ -maxdepth 1 -type f | sort
+
+# Apparmor disabled profiles
+find /etc/apparmor.d/disable/ -maxdepth 1 -type f
+
+# Enforce Apparmor profile
+sudo aa-enforce <profile>
+
+# Change Apparmor profile to complain (disable it)
+sudo aa-complain <profile>
+
+# Generate Apparmor profile
+aa-genprof
+
+# Generate Apparmor profile from template
+aa-easyprof --
+
+# View Apparmor profile logs and change profiles to allow actions
+sudo aa-logprof
+
+# Reload Apparmor profile
+sudo apparmor_parser -r <profile>

@@ -1,7 +1,7 @@
 % gnome
 
 # Exit session
-gnome-session-quit
+gnome-session-quit --no-prompt
 
 # List extension directories
 ll ~/.local/share/gnome-shell/extensions/ /usr/share/gnome-shell/extensions/ ~/.nix-profile/share/gnome-shell/extensions/

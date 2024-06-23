@@ -21,3 +21,7 @@ $ patch_file: ls -1 *.patch
 
 # Show path with one line per directory
 echo $PATH | tr ':' '\n'
+
+# Kill process
+kill -9 <process>
+$ process: ps -e --forest -o pid,comm --- --map "awk '{ print $1 }'" --header-lines 1
