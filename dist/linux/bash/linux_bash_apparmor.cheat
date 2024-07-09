@@ -9,7 +9,7 @@ sudo apparmor_status
 find /etc/apparmor.d/ -maxdepth 1 -type f | sort
 
 # Apparmor disabled profiles
-find /etc/apparmor.d/disable/ -maxdepth 1 -type f
+find /etc/apparmor.d/disable/ -maxdepth 1 -type l -or -type f | sort
 
 # Enforce Apparmor profile
 sudo aa-enforce <profile>
