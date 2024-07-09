@@ -11,3 +11,12 @@ gpg --list-keys
 
 # List secret keys
 gpg --list-secret-keys
+
+# List gpg components
+gpgconf --list-components
+
+# List directories dirs
+gpgconf --list-dirs
+
+# Reload gpg-agent
+gpg-connect-agent reloadagent /bye

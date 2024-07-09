@@ -1,5 +1,7 @@
 % gpg
 
+$ component: gpgconf --list-components | cut -f1 -d:
+
 # Show socket files
 ls -l $(gpgconf --list-dir socketdir)
 
@@ -10,3 +12,9 @@ $ socket_file: find $(gpgconf --list-dir socketdir) -type s
 # List owner process of all gpg sockets
 lsof <socketdir>/*
 $ socketdir: gpgconf --list-dir socketdir
+
+# List options
+gpgconf --list-options <component>
+
+# Reload a component
+gpgconf --reload <component>
