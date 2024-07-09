@@ -12,8 +12,18 @@ gpg --list-keys
 # List secret keys
 gpg --list-secret-keys
 
+# List gpg components
+gpgconf --list-components
+
+# List directories dirs
+gpgconf --list-dirs
+
+# Reload gpg-agent
+gpg-connect-agent reloadagent /bye
 
 % gpg, bash
+
+$ component: gpgconf --list-components | cut -f1 -d:
 
 # Show socket files
 ls -l $(gpgconf --list-dir socketdir)
@@ -25,3 +35,9 @@ $ socket_file: find $(gpgconf --list-dir socketdir) -type s
 # List owner process of all gpg sockets
 lsof <socketdir>/*
 $ socketdir: gpgconf --list-dir socketdir
+
+# List options
+gpgconf --list-options <component>
+
+# Reload a component
+gpgconf --reload <component>
