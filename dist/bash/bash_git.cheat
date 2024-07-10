@@ -20,3 +20,10 @@ $ branch: git --no-pager --git-dir=<original_dir>/.git branch --format='%(refnam
 # Show a commit
 git show --format=fuller <commit>
 $ commit: git log --pretty=format:"%C(yellow)%h %Creset%s%Cblue [%cn] %Creset- %ad%Cred%d" --decorate --date=relative --- --map "awk '{ print $1 }'" --preview "git show $(echo {1} | awk '{ print $1 }') --format=fuller"
+
+# Create a patch from current diff
+git --no-pager diff --color=never HEAD > diff.patch
+
+# Create a patch from current diff
+git apply <patch>
+$ patch: ls -1 *.patch
