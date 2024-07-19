@@ -1,0 +1,10 @@
+% howdy
+
+# Add new face model to Howdy hello
+sudo howdy add
+
+# Test if camera is working with Howdy hello
+sudo howdy test
+
+# Config howdy hello
+sudo howdy config
