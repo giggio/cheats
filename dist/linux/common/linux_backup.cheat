@@ -1,0 +1,18 @@
+% backup, restore
+
+$ device: lsblk --list -e7 -d --noheadings -o NAME
+
+# Sync submodules
+sudo fsarchiver savefs ./backup /dev/sda1 /dev/sda2
+
+# Backup MBR of sda
+sudo dd if=/dev/<device> of=./mbr.raw bs=512 count=1
+
+# Restore MBR
+sudo dd if=./mbr.raw of=/dev/<device> bs=512
+
+# Restore first partition
+sudo fsarchiver restfs ./backup.fsa id=0,dest=/dev/sda1 -v
+
+# Restore second partition
+sudo fsarchiver restfs ./backup.fsa id=1,dest=/dev/sda2 -v
