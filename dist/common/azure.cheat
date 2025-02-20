@@ -1,0 +1,7 @@
+% git
+
+# Deploy static azure web app
+swa deploy --env production
+
+# Deploy static azure web app with token
+swa deploy --env production --deployment-token $t
