@@ -2,3 +2,6 @@
 
 # Check if restart/reboot is necessary
 [ -f /var/run/reboot-required ] && echo -e "\e[31mReboot required.\e[0m" || echo -e "\e[32mNo need to reboot.\e[0m"
+
+# Refresh DNS cache
+sudo resolvectl flush-caches
