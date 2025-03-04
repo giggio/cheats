@@ -99,3 +99,9 @@ $ store_build_dir: fd '.*-<executable>-.*' /nix/store/ -td
 # List executable nix store path
 ll <store_dir>
 $ store_dir: dirname $(readlink -f `which <executable>`)
+
+# Review a nixpkgs pull request (PR)
+nixpkgs-review pr <pr_number>
+
+# Build azure-cli with nix
+nix build --impure --expr 'with (import ./. {}); azure-cli.withExtensions [ azure-cli.extensions.containerapp ]'
