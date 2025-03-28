@@ -1,4 +1,4 @@
-% git
+% azure
 
 # Deploy static azure web app
 swa deploy --env production

@@ -3,7 +3,6 @@
 # Sync submodules
 git submodule sync
 
-
 % git, bash
 
 # View a commit from a file history
@@ -33,3 +32,8 @@ git --no-pager diff --color=never HEAD > diff.patch
 # Create a patch from current diff
 git apply <patch>
 $ patch: ls -1 *.patch
+
+# Copy a file from another commit
+git checkout <branch> <file>
+$file: git ls-tree -r <branch> --name-only
+$ branch: git branch --format='%(refname:short)' | sort
