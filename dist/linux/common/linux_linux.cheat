@@ -5,3 +5,7 @@
 
 # Refresh DNS cache
 sudo resolvectl flush-caches
+
+# Total memory used by a process including its children
+(pgrep <process> | xargs ps h -o rss,command; ps h --ppid $(pgrep <process>) -o rss,command) | tee /dev/stderr | awk '{sum += $1} END {printf("Total memory used: %'"'"'d\n", sum)}'
+$ process: ps -e -o comm | sort | uniq | less
