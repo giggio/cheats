@@ -1,0 +1,5 @@
+% pdf
+
+# Join pdfs in one file
+pdfunite <input_pdfs> <out_file_name>
+$ input_pdfs: find . -maxdepth 2 -type f -name '*.pdf' | sort --- --multi --expand
