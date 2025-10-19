@@ -2,3 +2,14 @@
 
 # Show installed packages
 apt list --installed
+
+# Show manuall installed packages
+apt-mark showmanual
+
+# Show package details
+apt show <package>
+$ package: apt-mark showmanual
+
+# Remove package
+sudo apt remove <package>
+$ package: apt-mark showmanual
