@@ -100,11 +100,23 @@ $ store_build_dir: fd '.*-<executable>-.*' /nix/store/ -td
 ll <store_dir>
 $ store_dir: dirname $(readlink -f `which <executable>`)
 
+# Review nixpkgs HEAD commit
+nixpkgs-review rev HEAD
+
 # Review a nixpkgs pull request (PR)
 nixpkgs-review pr <pr_number>
+
+# Run update test on a package
+nix-shell maintainers/scripts/update.nix --argstr package <update_package>
+
+# Run version test on a package
+nix-build -A <package>.passthru.tests.version
 
 # Build azure-cli with nix
 nix build --impure --expr 'with (import ./. {}); azure-cli.withExtensions [ azure-cli.extensions.containerapp ]'
 
 # Locate/find nix files
 nix-locate
+
+# Get the hash for a file
+nix-prefetch-url
