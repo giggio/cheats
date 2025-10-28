@@ -105,3 +105,6 @@ nixpkgs-review pr <pr_number>
 
 # Build azure-cli with nix
 nix build --impure --expr 'with (import ./. {}); azure-cli.withExtensions [ azure-cli.extensions.containerapp ]'
+
+# Locate/find nix files
+nix-locate
