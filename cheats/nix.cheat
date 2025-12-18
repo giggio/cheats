@@ -19,7 +19,7 @@ home-manager generations
 # Installed packages
 nix-env --query --installed --out-path
 
-# Remove generations
+# Remove home-manager generations
 home-manager remove-generations <generation_id>
 $ generation_id: home-manager generations --- --map "awk '{ print $5 }'"
 
@@ -120,3 +120,15 @@ nix-locate
 
 # Get the hash for a file
 nix-prefetch-url
+
+# Show system-manager generations
+sudo env PATH="$PATH" nix-env --list-generations --profile /nix/var/nix/profiles/system-manager-profiles/system-manager
+
+# Remove old system-manager generations
+sudo env PATH="$PATH" nix-env --delete-generations old --profile /nix/var/nix/profiles/system-manager-profiles/system-manager
+
+# Show system-manager history
+nix profile history --profile /nix/var/nix/profiles/system-manager-profiles/system-manager
+
+# system-manager switch
+sudo env PATH="$PATH" RUST_LOG=trace nix run --accept-flake-config 'github:numtide/system-manager' -- switch --flake "$HOME/.dotfiles/system-manager?submodules=1#rog2"
