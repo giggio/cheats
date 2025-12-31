@@ -116,7 +116,10 @@ nix-build -A <package>.passthru.tests.version
 nix build --impure --expr 'with (import ./. {}); azure-cli.withExtensions [ azure-cli.extensions.containerapp ]'
 
 # Locate/find nix files
-nix-locate
+nix-locate --whole-name --type s --type x --color never /bin/yourfile
+
+# Create index for nix-locate
+nix-index
 
 # Get the hash for a file
 nix-prefetch-url
@@ -132,3 +135,12 @@ nix profile history --profile /nix/var/nix/profiles/system-manager-profiles/syst
 
 # system-manager switch
 sudo env PATH="$PATH" RUST_LOG=trace nix run --accept-flake-config 'github:numtide/system-manager' -- switch --flake "$HOME/.dotfiles/system-manager?submodules=1#rog2"
+
+# run a primary command directly from nixpkgs
+nix run nixpkgs#<package_searched>
+$ package_searched: nix search --json nixpkgs ^ | jq -r 'keys | .[]' | sed 's/.*\.//' | sort | uniq
+
+# run a secondary command directly from nixpkgs
+nix shell nixpkgs#<package> -c <binary>
+$ package: echo "<nix_locate_out>" | awk '{print $1}' | sed 's/.out//'
+$ nix_locate_out: nix-locate --whole-name --type s --type x --color never /bin/<binary>
