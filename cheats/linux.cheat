@@ -13,3 +13,5 @@ $ process: ps -e -o comm | sort | uniq | less
 # Find which process is using a specific file
 fuser -v <file>
 
+# Check if the system clock is synchronized
+timedatectl timesync-status
