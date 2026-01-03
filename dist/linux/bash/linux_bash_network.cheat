@@ -20,3 +20,6 @@ networkctl status <physical_interface>
 
 # List network status of all interfaces
 networkctl list
+
+# Resolve DNS for an IP
+dig -x your_ip
