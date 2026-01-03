@@ -144,3 +144,18 @@ $ package_searched: nix search --json nixpkgs ^ | jq -r 'keys | .[]' | sed 's/.*
 nix shell nixpkgs#<package> -c <binary>
 $ package: echo "<nix_locate_out>" | awk '{print $1}' | sed 's/.out//'
 $ nix_locate_out: nix-locate --whole-name --type s --type x --color never /bin/<binary>
+
+# Add nixos channel stable
+nix-channel --add https://nixos.org/channels/nixos-25.11 nixpkgs; nix-channel --update
+
+# View the latest kernel version of arm64
+nix eval --raw nixpkgs#legacyPackages.aarch64-linux.linuxPackages_latest.kernel.version
+
+# nix repl
+nix repl --extra-experimental-features 'flakes' nixpkgs
+
+# nix repl importing nixpkgs
+nix repl --expr 'import <nixpkgs>{}'
+
+# show flake outputs
+nix flake show
