@@ -37,3 +37,9 @@ $ patch: ls -1 *.patch
 git checkout <branch> <file>
 $file: git ls-tree -r <branch> --name-only
 $ branch: git branch --format='%(refname:short)' | sort
+
+# Show diverging commits from origin
+git rev-list origin..HEAD | xargs -I _ git show --name-only '_'
+
+# Show tree of commits for all branches
+git log --all --graph

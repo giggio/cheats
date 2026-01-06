@@ -45,14 +45,14 @@ home-manager expire-generations '-14 days'
 home-manager expire-generations '-0 seconds'
 
 # Remove garbage (gc)
-nix-store --gc
+nix store gc
 
 # see https://nixos.wiki/wiki/Cleaning_the_nix_store
 # Show nix gc roots
 sudo `which nix-store` --gc --print-roots | egrep -v "^(/nix/var|/run/\w+-system|\{memory|/proc)"
 
 # Optimize nix store
-nix-store --optimise
+nix store optimise
 
 # List generations from nix-env
 nix-env --list-generations
@@ -76,15 +76,15 @@ nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations old
 nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations +3 && \
   nix-env --delete-generations +3 && \
   home-manager generations | tail -n '+4' | awk '{print $5}' | xargs -t -L1 home-manager remove-generations && \
-  nix-store --gc && \
-  nix-store --optimise
+  nix store gc && \
+  nix store optimise
 
 # Clean up all Nix storage (home-manager)
 nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations old && \
   nix-env --delete-generations old && \
   home-manager expire-generations '-0 seconds' && \
-  nix-store --gc && \
-  nix-store --optimise
+  nix store gc && \
+  nix store optimise
 
 # Clean up all Nix storage (NixOS)
 sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations old
@@ -159,3 +159,6 @@ nix repl --expr 'import <nixpkgs>{}'
 
 # show flake outputs
 nix flake show
+
+# Fix store optimise problems
+nix store optimise 2>&1 | sed -E "s/.*'(\/nix\/store\/[^\/]*).*'/\1/g" | uniq | sudo `which parallel` "$(which nix-store) --repair-path {}"
