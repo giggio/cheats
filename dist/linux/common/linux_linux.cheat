@@ -15,3 +15,9 @@ fuser -v <file>
 
 # Check if the system clock is synchronized
 timedatectl timesync-status
+
+# Version of the Motherboard firmware
+echo "Version `sudo dmidecode -s bios-version` from `sudo dmidecode -s bios-release-date`"
+
+# Show computer hardware information
+sudo fwupdmgr get-devices
