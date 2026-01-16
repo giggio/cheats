@@ -39,6 +39,9 @@ systemctl --user status <service>
 # Show user service details
 systemctl --user show <service>
 
+# View user service file
+systemctl --user cat <service>
+
 # Show user service logs
 journalctl --user -u <service>
 
@@ -71,6 +74,9 @@ systemctl --user list-dependencies <unit>
 
 # List user unit dependents
 systemctl --user list-dependencies --reverse <unit>
+
+# Analyze systemd next timers iterations
+systemd-analyze calendar --iterations=5 "*-*-* 0/3:00:00 America/Sao_Paulo"
 
 % systemd
 
@@ -113,6 +119,9 @@ systemctl status <service>
 
 # Show service details
 systemctl show <service>
+
+# View service file
+sudo systemctl cat <service>
 
 # Show service logs
 journalctl -u <service>
