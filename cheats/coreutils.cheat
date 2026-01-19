@@ -1,0 +1,4 @@
+% coreutils
+
+# List files sorted by date and in human-readable format
+ls -ltrh
