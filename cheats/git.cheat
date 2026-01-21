@@ -43,3 +43,6 @@ git rev-list origin..HEAD | xargs -I _ git show --name-only '_'
 
 # Show tree of commits for all branches
 git log --all --graph
+
+# Git diff with full context
+git diff --no-prefix -U1000 HEAD
