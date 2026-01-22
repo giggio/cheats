@@ -162,3 +162,7 @@ nix flake show
 
 # Fix store optimise problems
 nix store optimise 2>&1 | sed -E "s/.*'(\/nix\/store\/[^\/]*).*'/\1/g" | uniq | sudo `which parallel` "$(which nix-store) --repair-path {}"
+
+# Convert yaml to nix expression
+nix run nixpkgs#yaml2nix <yaml_file>
+$ yaml_file: find . -type f -name '*.yaml' -or -name '*.yml'
