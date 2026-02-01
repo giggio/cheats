@@ -166,3 +166,6 @@ nix store optimise 2>&1 | sed -E "s/.*'(\/nix\/store\/[^\/]*).*'/\1/g" | uniq | 
 # Convert yaml to nix expression
 nix run nixpkgs#yaml2nix <yaml_file>
 $ yaml_file: find . -type f -name '*.yaml' -or -name '*.yml'
+
+# Convert git repository to nix expression and get hash for commit
+nix run nixpkgs#nix-prefetch-git -- https://codeberg.org/...git --rev ...
