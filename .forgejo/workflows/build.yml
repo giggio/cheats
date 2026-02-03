@@ -50,7 +50,11 @@ jobs:
       - run: |
           set -euo pipefail
           echo "Running tests..."
+          apt-get update
+          apt-get install -y gawk
+          awk --version
           npm i -g bats bats-assert bats-support
+          export BATS_LIB_PATH="$(npm root -g)"
           ./run_tests.sh --formatter tap13 | tee ./results.tap
         name: Test
       - uses: https://github.com/test-summary/action@v2
