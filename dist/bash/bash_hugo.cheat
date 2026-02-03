@@ -1,0 +1,8 @@
+% hugo
+
+# Hugo dev server
+hugo server --buildDrafts --printPathWarnings --renderToMemory --baseURL <url>
+$ url: grep baseURL config/_default/hugo.toml | cut --delimiter '=' --fields 2 | sed 's/"//g' | xargs
+
+# Hugo build
+hugo --environment production --gc --cleanDestinationDir --ignoreCache

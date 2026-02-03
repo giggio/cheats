@@ -27,3 +27,17 @@ git --no-pager diff --color=never HEAD > diff.patch
 # Create a patch from current diff
 git apply <patch>
 $ patch: ls -1 *.patch
+
+# Copy a file from another commit
+git checkout <branch> <file>
+$file: git ls-tree -r <branch> --name-only
+$ branch: git branch --format='%(refname:short)' | sort
+
+# Show diverging commits from origin
+git rev-list origin..HEAD | xargs -I _ git show --name-only '_'
+
+# Show tree of commits for all branches
+git log --all --graph
+
+# Git diff with full context
+git diff --no-prefix -U1000 HEAD
