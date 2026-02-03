@@ -1,7 +1,7 @@
 % navi, cheats
 
 # View Navi cheat sheets syntax
-start https://github.com/denisidoro/navi/blob/master/docs/cheatsheet_syntax.md
+start https://github.com/denisidoro/navi/blob/b01291e04041ea617de8d9ee7be628e4ac64e241/docs/cheatsheet/syntax/README.md
 
 ; ------
 
@@ -40,6 +40,3 @@ if not ($env | get NAVI_ORIGINAL_PATH -i | is-empty) {
   $env.NAVI_PATH = $env.NAVI_ORIGINAL_PATH
   hide-env NAVI_ORIGINAL_PATH
 }
-
-# echo 456 (test)
-echo 456

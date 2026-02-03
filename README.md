@@ -1,5 +1,7 @@
 # Giovanni Bassi's Navi Cheats
 
+Main repo: [codeberg.org/giggio/cheats](https://codeberg.org/giggio/cheats)
+
 These are my cheatsheets for [Navi](https://github.com/denisidoro/navi).
 
 They are tagged by Shell and OS if they are specific to that environment.
@@ -9,7 +11,7 @@ They are tagged by Shell and OS if they are specific to that environment.
 Do:
 
 ````bash
-navi repo add https://github.com/giggio/cheats.git
+navi repo add https://codeberg.org/giggio/cheats.git
 ````
 
 See

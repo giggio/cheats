@@ -19,7 +19,7 @@ home-manager generations
 # Installed packages
 nix-env --query --installed --out-path
 
-# Remove generations
+# Remove home-manager generations
 home-manager remove-generations <generation_id>
 $ generation_id: home-manager generations --- --map "awk '{ print $5 }'"
 
@@ -45,14 +45,14 @@ home-manager expire-generations '-14 days'
 home-manager expire-generations '-0 seconds'
 
 # Remove garbage (gc)
-nix-store --gc
+nix store gc
 
 # see https://nixos.wiki/wiki/Cleaning_the_nix_store
 # Show nix gc roots
 sudo `which nix-store` --gc --print-roots | egrep -v "^(/nix/var|/run/\w+-system|\{memory|/proc)"
 
 # Optimize nix store
-nix-store --optimise
+nix store optimise
 
 # List generations from nix-env
 nix-env --list-generations
@@ -72,12 +72,19 @@ nix-channel --list-generations
 # Delete old channel generations
 nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations old
 
-# Clean up all Nix storage
+# Clean up Nix storage and keep last 3 (home-manager)
+nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations +3 && \
+  nix-env --delete-generations +3 && \
+  home-manager generations | tail -n '+4' | awk '{print $5}' | xargs -t -L1 home-manager remove-generations && \
+  nix store gc && \
+  nix store optimise
+
+# Clean up all Nix storage (home-manager)
 nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations old && \
   nix-env --delete-generations old && \
   home-manager expire-generations '-0 seconds' && \
-  nix-store --gc && \
-  nix-store --optimise
+  nix store gc && \
+  nix store optimise
 
 # Clean up all Nix storage (NixOS)
 sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations old
@@ -92,3 +99,73 @@ $ store_build_dir: fd '.*-<executable>-.*' /nix/store/ -td
 # List executable nix store path
 ll <store_dir>
 $ store_dir: dirname $(readlink -f `which <executable>`)
+
+# Review nixpkgs HEAD commit
+nixpkgs-review rev HEAD
+
+# Review a nixpkgs pull request (PR)
+nixpkgs-review pr <pr_number>
+
+# Run update test on a package
+nix-shell maintainers/scripts/update.nix --argstr package <update_package>
+
+# Run version test on a package
+nix-build -A <package>.passthru.tests.version
+
+# Build azure-cli with nix
+nix build --impure --expr 'with (import ./. {}); azure-cli.withExtensions [ azure-cli.extensions.containerapp ]'
+
+# Locate/find nix files
+nix-locate --whole-name --type s --type x --color never /bin/yourfile
+
+# Create index for nix-locate
+nix-index
+
+# Get the hash for a file
+nix-prefetch-url
+
+# Show system-manager generations
+sudo env PATH="$PATH" nix-env --list-generations --profile /nix/var/nix/profiles/system-manager-profiles/system-manager
+
+# Remove old system-manager generations
+sudo env PATH="$PATH" nix-env --delete-generations old --profile /nix/var/nix/profiles/system-manager-profiles/system-manager
+
+# Show system-manager history
+nix profile history --profile /nix/var/nix/profiles/system-manager-profiles/system-manager
+
+# system-manager switch
+sudo env PATH="$PATH" RUST_LOG=trace nix run --accept-flake-config 'github:numtide/system-manager' -- switch --flake "$HOME/.dotfiles/system-manager?submodules=1#rog2"
+
+# run a primary command directly from nixpkgs
+nix run nixpkgs#<package_searched>
+$ package_searched: nix search --json nixpkgs ^ | jq -r 'keys | .[]' | sed 's/.*\.//' | sort | uniq
+
+# run a secondary command directly from nixpkgs
+nix shell nixpkgs#<package> -c <binary>
+$ package: echo "<nix_locate_out>" | awk '{print $1}' | sed 's/.out//'
+$ nix_locate_out: nix-locate --whole-name --type s --type x --color never /bin/<binary>
+
+# Add nixos channel stable
+nix-channel --add https://nixos.org/channels/nixos-25.11 nixpkgs; nix-channel --update
+
+# View the latest kernel version of arm64
+nix eval --raw nixpkgs#legacyPackages.aarch64-linux.linuxPackages_latest.kernel.version
+
+# nix repl
+nix repl --extra-experimental-features 'flakes' nixpkgs
+
+# nix repl importing nixpkgs
+nix repl --expr 'import <nixpkgs>{}'
+
+# show flake outputs
+nix flake show
+
+# Fix store optimise problems
+nix store optimise 2>&1 | sed -E "s/.*'(\/nix\/store\/[^\/]*).*'/\1/g" | uniq | sudo `which parallel` "$(which nix-store) --repair-path {}"
+
+# Convert yaml to nix expression
+nix run nixpkgs#yaml2nix <yaml_file>
+$ yaml_file: find . -type f -name '*.yaml' -or -name '*.yml'
+
+# Convert git repository to nix expression and get hash for commit
+nix run nixpkgs#nix-prefetch-git -- https://codeberg.org/...git --rev ...

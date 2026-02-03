@@ -1,0 +1,25 @@
+% network, bash, linux
+
+$dhcp_interface: ip -br -4 addr show up dynamic | awk '{print $1}'
+$physical_interface: ls /sys/class/net -1
+
+# View/debug dhcp server
+sudo nmap --script broadcast-dhcp-discover
+
+# View network status with NetworkManager
+nmcli device status
+
+# Renew dhcp with NetworkManager
+sudo nmcli device reapply <dhcp_interface>
+
+# Restart systemd-networkd and renew DHCP
+sudo systemctl restart systemd-networkd
+
+# Check network status of an interface
+networkctl status <physical_interface>
+
+# List network status of all interfaces
+networkctl list
+
+# Resolve DNS for an IP
+dig -x your_ip
