@@ -24,8 +24,8 @@ You won't be able to use `navi repo add` if you do that.
 
 ## Author
 
-[Giovanni Bassi](https://twitter.com/giovannibassi)
+[Giovanni Bassi](https://links.giggio.net/bio)
 
 ## License
 
-Licensed under the Apache License, Version 2.0.
+Licensed under the MIT license.
