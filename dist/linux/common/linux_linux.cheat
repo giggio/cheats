@@ -21,3 +21,6 @@ echo "Version `sudo dmidecode -s bios-version` from `sudo dmidecode -s bios-rele
 
 # Show computer hardware information
 sudo fwupdmgr get-devices
+
+# View if secureboot is enabled
+sudo mokutil --sb-state

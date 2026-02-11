@@ -1,0 +1,5 @@
+% network
+
+# OCR image
+tesseract -l por <image> /tmp/t && cat /tmp/t.txt | clip && rm /tmp/t.txt
+$ image: ls -1 *.gif *.jpg *.png *.jpeg *.webp | sort
