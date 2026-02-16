@@ -169,3 +169,6 @@ $ yaml_file: find . -type f -name '*.yaml' -or -name '*.yml'
 
 # Convert git repository to nix expression and get hash for commit
 nix run nixpkgs#nix-prefetch-git -- https://codeberg.org/...git --rev ...
+
+# Prefetch current commit for current git repository
+nix run nixpkgs#nix-prefetch-git -- `git http` --rev `git rev-parse HEAD`
