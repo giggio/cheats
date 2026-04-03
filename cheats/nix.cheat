@@ -8,7 +8,7 @@ $ profile: hm --get-profile
 home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1#<profile>
 
 # Update Nix, flake inputs and home manager switch
-rm ~/.dotfiles/home-manager/flake.lock && home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1#<profile> --refresh
+pushd ~/.dotfiles/home-manager/ && nix flake update nixpkgs && home-manager switch --show-trace --flake ~/.dotfiles/home-manager?submodules=1#<profile>; popd
 
 # Update nix channels
 nix-channel --update
