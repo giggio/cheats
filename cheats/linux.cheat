@@ -24,3 +24,10 @@ sudo fwupdmgr get-devices
 
 # View if secureboot is enabled
 sudo mokutil --sb-state
+
+# View dmesg with colors and with a pager
+sudo dmesg -H --color=always | less -R
+
+; needs lesstty to be installed (from colorized-logs)
+# View dmesg with colors and with a pager (with lesstty)
+sudo lesstty dmesg -H
