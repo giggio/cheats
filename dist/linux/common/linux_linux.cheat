@@ -31,3 +31,12 @@ sudo dmesg -H --color=always | less -R
 ; needs lesstty to be installed (from colorized-logs)
 # View dmesg with colors and with a pager (with lesstty)
 sudo lesstty dmesg -H
+
+# Force unmount Onedriver fuse mount
+fusermount3 -u $HOME/onedrive
+
+# Show swaps
+cat /proc/swaps
+
+# Show swaps 2
+swapon --show
