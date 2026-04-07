@@ -172,3 +172,6 @@ nix run nixpkgs#nix-prefetch-git -- https://codeberg.org/...git --rev ...
 
 # Prefetch current commit for current git repository
 nix run nixpkgs#nix-prefetch-git -- `git http` --rev `git rev-parse HEAD`
+
+# Prefetch url
+nix run nixpkgs#nix-prefetch -- builtins.fetchurl --url https://...
