@@ -40,3 +40,6 @@ cat /proc/swaps
 
 # Show swaps 2
 swapon --show
+
+# Search man pages
+man -K <keyword>

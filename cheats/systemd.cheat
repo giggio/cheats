@@ -172,3 +172,6 @@ systemctl --user list-dependencies --reverse <unit>
 
 # Analyze systemd next timers iterations
 systemd-analyze calendar --iterations=5 "*-*-* 0/3:00:00 America/Sao_Paulo"
+
+# Analyze systemd services initialization time to find performance issues
+systemd-analyze blame
