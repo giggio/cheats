@@ -43,3 +43,27 @@ swapon --show
 
 # Search man pages
 man -K <keyword>
+
+
+% nbd, linux
+
+# Add the Network Block Device (nbd) kernel module
+sudo modprobe nbd
+
+# Mount a qcow2 image in a Network Block Device (nbd)
+sudo qemu-nbd --connect=<nbd_device> /path/to/image.qcow2
+$ nbd_device: find /dev -maxdepth 1 -regex '/dev/nbd[0-9]+' | tac
+
+# List the partitions in a Network Block Device (nbd)
+sudo fdisk <nbd_device> -l
+
+# Mount a partition in a Network Block Device (nbd)
+mkdir /tmp/<nbd_partition_name> && sudo mount <nbd_partition> /tmp/<nbd_partition_name>
+$ nbd_partition_name: basename <nbd_partition>
+$ nbd_partition: find /dev -maxdepth 1 -regex '/dev/nbd[0-9]+p[0-9]'
+
+# Unmount a Network Block Device (nbd)
+sudo umount /tmp/<nbd_partition_name>
+
+# Disconnect a Network Block Device (nbd)
+sudo qemu-nbd --disconnect <nbd_device>
