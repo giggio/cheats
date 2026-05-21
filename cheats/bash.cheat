@@ -25,3 +25,9 @@ echo $PATH | tr ':' '\n'
 # Kill process
 kill -9 <process>
 $ process: ps -e --forest -o pid,comm --- --map "awk '{ print $1 }'" --header-lines 1
+
+# Is bash running in a login shell?
+shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'
+
+# Is bash running in an interactive shell?
+[[ $- == *i* ]] && echo 'Interactive' || echo 'Not interactive'
