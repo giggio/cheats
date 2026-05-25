@@ -67,3 +67,6 @@ sudo umount /tmp/<nbd_partition_name>
 
 # Disconnect a Network Block Device (nbd)
 sudo qemu-nbd --disconnect <nbd_device>
+
+# Shows if running wayland or x11
+echo $XDG_SESSION_TYPE
