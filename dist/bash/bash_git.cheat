@@ -41,3 +41,6 @@ git log --all --graph
 
 # Git diff with full context
 git diff --no-prefix -U1000 HEAD
+
+# Show number of commits
+git rev-list --count <branch>
