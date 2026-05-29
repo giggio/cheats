@@ -1,0 +1,7 @@
+% btrfs, linux
+
+# View btrfs device status
+sudo btrfs device stats /
+
+# List btrfs submodules
+sudo btrfs subvolume list /
