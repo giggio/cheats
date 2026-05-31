@@ -71,6 +71,12 @@ sudo qemu-nbd --disconnect <nbd_device>
 # Shows if running wayland or x11
 echo $XDG_SESSION_TYPE
 
+# View Debian/Ubuntu EFI bootloader/grub information
+sudo debconf-show grub-efi-amd64
+
+# Reconfigure Debian/Ubuntu EFI bootloader/grub
+sudo dpkg-reconfigure grub-efi-amd64
+
 # Show device info on udev
 udevadm info --query=all --name=<device>
 $ device: find /dev ! -type d | sort
