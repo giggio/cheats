@@ -3,7 +3,11 @@
 # Use raw cheats for development
 if ! [ -v NAVI_ORIGINAL_PATH ]; then
   export NAVI_ORIGINAL_PATH=$NAVI_PATH
-  export NAVI_PATH=$HOME/.dotfiles/home-manager/cheats/cheats/
+  if [ -f /etc/NIXOS ]; then
+    export NAVI_PATH=/etc/nixos/modules/pcbase/home-manager/cheats/cheats/
+  else
+    export NAVI_PATH=$HOME/.dotfiles/home-manager/cheats/cheats/
+  fi
 fi
 
 # Revert to use built cheats

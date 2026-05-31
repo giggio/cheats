@@ -1,0 +1,19 @@
+% audio
+
+# Restart audio services
+systemctl --user restart wireplumber pipewire pipewire-pulse
+
+# List pulseaudio audio cards
+nix shell nixpkgs#pulseaudio --command pactl list cards
+
+# Show WirePlumber status of pipewire objects
+wpctl status
+
+# Show WirePlumber properties and metadata of pipewire objects
+wpctl inspect <id>
+
+# List sound cards and devices in the file system
+ls -la /proc/asound
+
+# List generic alsa card profiles (ACP) in Nix
+ls -la /run/current-system/sw/share/alsa-card-profile/mixer/paths/

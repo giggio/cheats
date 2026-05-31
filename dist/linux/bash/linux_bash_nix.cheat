@@ -175,3 +175,6 @@ nix run nixpkgs#nix-prefetch-git -- `git http` --rev `git rev-parse HEAD`
 
 # Prefetch url
 nix run nixpkgs#nix-prefetch -- builtins.fetchurl --url https://...
+
+# Show NixOS version details
+nixos-version --json

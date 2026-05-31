@@ -70,3 +70,17 @@ sudo qemu-nbd --disconnect <nbd_device>
 
 # Shows if running wayland or x11
 echo $XDG_SESSION_TYPE
+
+# Show device info on udev
+udevadm info --query=all --name=<device>
+$ device: find /dev ! -type d | sort
+
+# Show device info on udev for video devices
+udevadm info --attribute-walk --path=<video_devices>
+$ video_devices: find /sys/class/video4linux/ -type l | sort
+
+# For devices, signal systemd-udevd to reload the rules files and other databases like the kernel module index. Needs to call trigger to apply.
+sudo udevadm control --reload
+
+# Request device events from the kernel. Primarily used to replay events at system coldplug time.
+sudo udevadm trigger --verbose
