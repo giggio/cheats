@@ -1,5 +1,8 @@
 % btrfs
 
+# Show btrfs file system details
+btrfs filesystem show
+
 # View btrfs device stats
 sudo btrfs device stats /
 
