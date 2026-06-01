@@ -1,7 +1,16 @@
 % btrfs
 
-# View btrfs device status
+# View btrfs device stats
 sudo btrfs device stats /
+
+# Showd btrfs usage per device
+sudo btrfs device usage /
 
 # List btrfs submodules
 sudo btrfs subvolume list /
+
+# Showd btrfs file system usage
+sudo btrfs filesystem usage /
+
+# Showd btrfs file allocation
+sudo btrfs filesystem df /
