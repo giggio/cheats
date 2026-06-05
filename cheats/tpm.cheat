@@ -1,0 +1,10 @@
+% tpm, bash, linux
+
+# Show current locked TPM PCRs locked
+jq '.pcrValues.[].pcr' /var/lib/systemd/pcrlock.json | sort -n
+
+# View PCR 4 values from log
+sudo systemd-pcrlock log --json=short 2>/dev/null | jq '[.log[] | select(.pcr == 4)]'
+
+# View nix configuration that was used in the boot loader as a part of PCR 4 log
+sudo systemd-pcrlock log --json=short 2>/dev/null | jq -r '.log[] | select(.pcr == 4 and .component == "635-lanzaboote").description' | sed -En 's/.+nixos-generation-([[:digit:]]+).+/\1/p'
