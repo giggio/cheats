@@ -2,3 +2,6 @@
 
 # Update all npm tools
 npm update -g
+
+# Update all npm packages
+npx npm-check-updates -u
