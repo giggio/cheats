@@ -171,6 +171,10 @@ nix store optimise 2>&1 | sed -E "s/.*'(\/nix\/store\/[^\/]*).*'/\1/g" | uniq | 
 nix run nixpkgs#yaml2nix <yaml_file>
 $ yaml_file: find . -type f -name '*.yaml' -or -name '*.yml'
 
+# Convert toml to nix expression
+nix run github:erooke/toml2nix <toml_file>
+$ toml_file: find . -type f -name '*.toml'
+
 # Convert git repository to nix expression and get hash for commit
 nix run nixpkgs#nix-prefetch-git -- https://codeberg.org/...git --rev ...
 
