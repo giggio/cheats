@@ -119,6 +119,9 @@ nix-build -A <package>.passthru.tests.version
 # Build azure-cli with nix
 nix build --impure --expr 'with (import ./. {}); azure-cli.withExtensions [ azure-cli.extensions.containerapp ]'
 
+# Run azure-cli with nix shell and an extension
+nix shell --impure --expr "with (import (builtins.getFlake ''nixpkgs'') {}); azure-cli.withExtensions [ azure-cli.extensions.azure-devops ]"
+
 # Locate/find nix files
 nix-locate --whole-name --type s --type x --color never /bin/yourfile
 
