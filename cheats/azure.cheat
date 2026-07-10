@@ -5,3 +5,12 @@ swa deploy --env production
 
 # Deploy static azure web app with token
 swa deploy --env production --deployment-token $t
+
+# List repositories in an Azure Devops Organization
+az repos list --organization https://dev.azure.com/org_name/ --project project_name
+
+# Clone all projects in an Azure Devops Organization
+az repos list --organization https://dev.azure.com/org_name/ --project project_name | jq -r '.[].sshUrl' | xargs -I {} git clone "{}"
+
+# Migrate all projects from Azure Devops to Forgejo
+az repos list --organization https://dev.azure.com/org_name/ --project project_name | jq -r '.[] | "\(.webUrl) \(.name)"' | while read -r url name; do curl -X 'POST' 'https://forgejo_domain/api/v1/repos/migrate' -H 'accept: application/json' -H "Authorization: token $key" -H 'Content-Type: application/json' -d '{ "auth_password": "'$azdokey'", "auth_username": "azdo_username", "clone_addr": "'$url'", "private": true, "repo_name": "'$name'", "repo_owner": "org_name" }'; done
