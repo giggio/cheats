@@ -189,3 +189,10 @@ nix run nixpkgs#nix-prefetch -- builtins.fetchurl --url https://...
 
 # Show NixOS version details
 nixos-version --json
+
+# Sign every build of a derivation
+nix build .#nixosConfigurations.configuration_name.config.system.build.toplevel --no-link --print-out-paths | xargs nix store sign --key-file <key_file> --recursive
+$ key_file: find ~/.config/nix -type f -name '*.key' | head -n1
+
+# Do a remote build with nix
+nixos-rebuild switch --flake .#configuration_name --target-host ip_or_hostname --use-remote-sudo --ask-sudo-password
