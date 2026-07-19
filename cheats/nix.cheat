@@ -88,6 +88,8 @@ nix-env --profile ~/.local/state/nix/profiles/channels --delete-generations old 
 
 # Clean up all Nix storage (NixOS)
 sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations old && \
+  sudo nix-collect-garbage -d && \
+  nix-collect-garbage -d && \
   nix store gc && \
   nix store optimise
 
